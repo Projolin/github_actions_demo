@@ -23,11 +23,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      # Step 3: Install dependencies (if requirements.txt exists)
-      - name: Install Dependencies
-        if: fileExists('requirements.txt')
-        run: pip install -r requirements.txt
-
-      # Step 4: Run the Python script
+      # Step 3: Run the Python script
       - name: Run Array Manipulation Script
         run: python ./array_manipulation.py
