@@ -4,24 +4,30 @@ on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
   test-python:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.8, 3.9, 3.10]  # Valid Python versions
+        python-version: [3.8, 3.9, 3.10]  # Python versions to test
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      # Step 2: Setup Python environment
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Debug Python Version
-        run: echo "Using Python version: ${{ matrix.python-version }}"
+      # Step 3: Install dependencies (if requirements.txt exists)
+      - name: Install Dependencies
+        if: fileExists('requirements.txt')
+        run: pip install -r requirements.txt
 
+      # Step 4: Run the Python script
       - name: Run Array Manipulation Script
-        run: python ./test_array_manipulation.py
+        run: python ./array_manipulation.py
