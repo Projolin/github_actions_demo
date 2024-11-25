@@ -1,0 +1,28 @@
+name: Java Setup Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  install-java:
+    runs-on: ubuntu-latest
+
+    env:
+      JAVA_VERSION: 11  # Environment variable for Java version
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}  # Use the environment variable
+          distribution: 'temurin'                # OpenJDK distribution (e.g., Temurin)
+
+      - name: Verify Java Installation
+        run: |
+          java -version
+          echo "Java version $JAVA_VERSION installed successfully!"
